@@ -15,10 +15,10 @@ def main():
         variants.append(s)
     check = sorted(data)
     for i in range(len(variants)):
-        s = ''
+        s = []
         for j in range(len(variants[i])):
-            s += data[int(variants[i][j])]
-        if s not in results and sorted([x for x in s]) == check:
+            s.append(data[int(variants[i][j])])
+        if s not in results and sorted(s) == check:
             results.append(s)
     print(results)
 
