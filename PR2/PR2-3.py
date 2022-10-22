@@ -31,7 +31,21 @@ def main():
                     return 0
                 if len(max_buffer) < len(buffer):
                     max_buffer = buffer
-    if max_buffer == '': print(False)
+    if max_buffer == '' or len(max_buffer) == 2:
+        result = ''
+        i = 0
+        while '()' in s or '{}' in s or '[]' in s:
+            bracket_index = brackets.index(s[i])
+            if bracket_index % 2 == 0:
+                if s[i+1] == brackets[bracket_index + 1]:
+                    result += s[i] + s[i+1]
+                    s = s[i+1:]
+                    i = 0
+            i += 1
+        if result == '':
+            print(False)
+        else:
+            print(result)
     else: print(max_buffer)
 
 
