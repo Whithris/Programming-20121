@@ -32,6 +32,7 @@ def main():
                 if len(max_buffer) < len(buffer):
                     max_buffer = buffer
     if max_buffer == '' or len(max_buffer) == 2:
+        olds = s
         result = ''
         i = 0
         while '()' in s or '{}' in s or '[]' in s:
@@ -45,7 +46,9 @@ def main():
         if result == '':
             print(False)
         else:
-            print(result)
+            if result == olds:
+                print(True)
+            else: print(result)
     else: print(max_buffer)
 
 
