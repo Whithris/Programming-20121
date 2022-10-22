@@ -1,17 +1,19 @@
 def main():
     s = input()
-    max_len = 0
-    res = chars = finres = ''
-    for j in range(len(s)):
-        for i in range(j, len(s)):
-            if s[i] in chars:
-                res = ''
-                chars = ''
-                if len(res) > max_len:
-                    max_len = len(res)
-                    finres = res
+    maxres = ''
+    for start in range(len(s)):
+        chars = ''
+        res = ''
+        for i in range(start, len(s)):
             res += s[i]
-            chars += s[i]
-        print(finres)
+            if s[i] not in chars:
+                chars += s[i]
+            else:
+                if len(res[:-1]) > len(maxres): maxres = res[:-1]
+                break
+        else:
+            if len(res) > len(maxres): maxres = res
+
+    print(maxres)
 if __name__ == '__main__':
     main()
