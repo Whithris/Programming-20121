@@ -1,9 +1,15 @@
 import itertools as it
 
-def near_indexes(n):
-    if 0 < n < 3:
-        return[n-1, n+1]
-    else: return [abs(n-1)]
+def near_indexes(n, h):
+    if h == 'r':
+        if 0 < n < 3:
+            return[n-1, n+1]
+        else: return [abs(n-1)]
+    else:
+        if n == 1:
+            return[n-1, n+1]
+        else: return [abs(n-1)]
+
 
 def get_pins(s):
     all_digit = [['1', '2', '3'],
@@ -24,9 +30,9 @@ def get_pins(s):
                 if i in j:
                     row_num = all_digit.index(j)
                     column_num = j.index(i)
-            for a in near_indexes(column_num):
+            for a in near_indexes(column_num, 'c'):
                 if all_digit[row_num][a]: cur_row.append(all_digit[row_num][a])
-            for b in near_indexes(row_num):
+            for b in near_indexes(row_num, 'r'):
                 if all_digit[b][column_num]: cur_column.append(all_digit[b][column_num])
             res += ''.join(cur_row)
             res += ''.join(cur_column)
