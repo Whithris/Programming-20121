@@ -1,3 +1,4 @@
+from sympy import *
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -5,25 +6,24 @@ def main():
     x = np.arange(0, 5, 0.01)
 
     plt.subplot(3, 3, 1)
-    y = (x - 5) ** 2 * np.cos(x ** 2 - 7)
-    plt.plot(x, y, 'r')
-    plt.scatter(x[np.argmax(y)], y.max(), color='r')
-    plt.scatter(x[np.argmin(y)], y.min(), color='r')
+    j = Symbol('j')
+    y = (j - 5) ** 2 * cos(j ** 2 - 7)
+    plt.plot(x, lambdify(j, y, 'numpy')(x), 'r')
+    plt.scatter(x[np.argmax(lambdify(j, y, 'numpy')(x))], lambdify(j, y, 'numpy')(x).max(), color='r')
+    plt.scatter(x[np.argmin(lambdify(j, y, 'numpy')(x))], lambdify(j, y, 'numpy')(x).min(), color='r')
     #plt.scatter(np.where(y == max(y)), max(y))
     plt.title('График 1 (Функция)')
 
     plt.subplot(3, 3, 3)
-    y = (2*(x - 5) * np.cos(x**2 - 7)) + ((x - 5)**2 * -np.sin(x**2 - 7)*2*x)
-    print("I производная: (2x-10)*cos(x^2 - 7) + ((x - 5)^2 * -2x*sin(x^2 - 7))")
-    plt.plot(x, y, 'r')
+    first_der = y.diff(j)
+    print("I производная:", first_der)
+    plt.plot(x, lambdify(j, first_der, 'numpy')(x), 'r')
     plt.title('График 2 (I производная)')
 
     plt.subplot(3, 3, 7)
-    y = ((2 * np.cos(x ** 2 - 7) + 2*(x - 5)*-np.sin(x**2 - 7)*2*x) +
-        (2*(x - 5) * -np.sin(x ** 2 - 7)*2*x + (x - 5)**2 * -np.cos(x ** 2 - 7)*2*x))
-    print("II производная: (2cos(x^2 - 7) + (2x-10)*-2x*sin(x^2 -7)) +"
-          "((2x-10)*-2x*sin(x^2 - 7) + (2x-10)*-2x*cos(x^2 - 7))")
-    plt.plot(x, y, 'r')
+    second_der = first_der.diff(j)
+    print("II производная:", second_der)
+    plt.plot(x, lambdify(j, second_der, 'numpy')(x), 'r')
     plt.title('График 3 (II производная)')
 
     x0 = 2.5
@@ -44,6 +44,7 @@ def main():
     y = (x - 5) ** 2 * np.cos(x ** 2 - 7)
     plt.plot(x, y, 'b')
     plt.title('График 4 (Касательные)')
+
 
     plt.show()
 if __name__ == '__main__':
